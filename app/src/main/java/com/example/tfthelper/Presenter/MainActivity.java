@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private String[] matchData;
     private MatchDto matchDto;
 
-    final private String APIKey = "RGAPI-608a5661-60d2-4a2f-9a20-573c9d0a715c";
+    final private String APIKey = "" //Added for Debugging, and Deploying; Must kept as Secret;
 
     //For Retrieving User's Id
     String userIdAPI = "https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-name/"; // and add "UserName" + API_KEY="APIKEY"
