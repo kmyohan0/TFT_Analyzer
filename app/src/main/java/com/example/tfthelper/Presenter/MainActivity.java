@@ -2,8 +2,10 @@ package com.example.tfthelper.Presenter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +20,10 @@ import com.example.tfthelper.Model.Parsers.SummonerIdAsync;
 import com.example.tfthelper.Model.Dto.SummonerDto;
 import com.example.tfthelper.R;
 
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
@@ -29,8 +34,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private SummonerDto summonerDto;
     private String[] matchData;
     private MatchDto matchDto;
+    private List<String> winSet = new ArrayList<>();
 
-    final private String APIKey = "RGAPI-608a5661-60d2-4a2f-9a20-573c9d0a715c";
+    final private String APIKey = "RGAPI-d844424b-2ac5-451a-afe2-e6e0c519923f";
 
     //For Retrieving User's Id
     String userIdAPI = "https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-name/"; // and add "UserName" + API_KEY="APIKEY"
@@ -47,33 +53,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             public void onClick(View v) {
                 try {
                     retrieveId();
-                    Handler handler = new Handler();
-                    //Giving intentional Delay so that thread is replaced by new process (from AsyncTask)
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                retrieveMatches();
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, 1500);
-                } catch (MalformedURLException e) {
+                }
+                catch (Exception e) {
                     e.printStackTrace();
                 }
-                Handler handler = new Handler();
-                //Giving intentional Delay so that thread is replaced by new process (from AsyncTask)
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            retrieveMatchData(0);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, 5000);
             }
         });
     }
@@ -84,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         puuidViewer = (TextView) findViewById(R.id.puuid_viewer);
     }
 
-    private void retrieveId() throws MalformedURLException {
+    private void retrieveId() {
         String userName = summonerName.getText().toString();
         String link = userIdAPI + userName + "?api_key=" + APIKey;
         SummonerIdAsync summonerIdAsync = new SummonerIdAsync();
@@ -92,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         summonerIdAsync.execute(link);
     }
 
-    private void retrieveMatches() throws MalformedURLException{
+    private void retrieveMatches() {
         String link = matchesAPI + summonerDto.getPuuid() + "/ids?count=" + 20 + "&api_key=" + APIKey;
         MatchesAsync matchesAsync = new MatchesAsync();
         matchesAsync.delegate = this;
@@ -109,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     @Override
     public void userIdResponse(SummonerDto summonerDto) throws MalformedURLException {
         this.summonerDto = summonerDto;
-        puuidViewer.setText(summonerDto.getPuuid());
+        retrieveMatches();
     }
 
     @Override
@@ -119,12 +102,37 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         for (int i = 0; i < 20; i++) {
             result += matchData[i];
         }
-        puuidViewer.setText(result);
+        for (int i = 0; i < 20; i++) {
+            final int temp = i;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        retrieveMatchData(temp);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, 500);
+        }
     }
 
     @Override
     public void matchDataResponse(MatchDto matchDto) {
         this.matchDto = matchDto;
-        puuidViewer.setText(matchDto.getInfo().getTft_set_number());
+        String deckUsed = "";
+        //Apparently, this is an issue from RIOT API (a bug which only first place's trait and items shows, no other player's traits and items can be seen as of right now.
+        //Hopefully, this will be fixed soon, since we want User's data, not First place's data.
+        for (int i = 0; i < 8; i++) {
+            int userPlacement = matchDto.getInfo().getParticipants().get(i).getPlacement();
+            if (userPlacement == 1) {
+                deckUsed = matchDto.getInfo().getParticipants().get(i).getTraits().get(0).getName() + " " + matchDto.getInfo().getParticipants().get(i).getTraits().get(1).getName();
+                break;
+            }
+        }
+        winSet.add(deckUsed);
+        puuidViewer.append("Set: " + winSet.get(winSet.size()-1) + '\n');
     }
+
 }

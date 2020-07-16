@@ -32,12 +32,12 @@ public class MatchDataAsync extends AsyncTask<String, Integer, String> {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             InputStream is = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            StringBuilder stringBuilder = new StringBuilder(is.available());
             String line;
-            //TODO: Fix to make sure that BufferedReader gives ALL of Json to postJson
             while ((line = reader.readLine()) != null) {
-                Log.d("doInBackground", line);
-                postJson += line;
+                stringBuilder.append(line);
             }
+            postJson = stringBuilder.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,7 +56,6 @@ public class MatchDataAsync extends AsyncTask<String, Integer, String> {
         builder.setPrettyPrinting();
         Gson gson = builder.create();
         matchData = gson.fromJson(postJson, MatchDto.class);
-        Log.d("delegateNullReference", String.valueOf(delegate == null));
         delegate.matchDataResponse(matchData);
     }
 }

@@ -32,7 +32,6 @@ public class SummonerIdAsync extends AsyncTask<String, Integer, String> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
             while ((line = reader.readLine()) != null) {
-                Log.d("doInBackground", line);
                 postJson += line;
             }
             urlConnection.disconnect();
@@ -55,8 +54,8 @@ public class SummonerIdAsync extends AsyncTask<String, Integer, String> {
         builder.setPrettyPrinting();
         Gson gson = builder.create();
         summonerDto = gson.fromJson(postJson, SummonerDto.class);
-        Log.d("delegateNullReference", String.valueOf(delegate == null));
         try {
+
             delegate.userIdResponse(summonerDto);
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -33,7 +33,6 @@ public class MatchesAsync extends AsyncTask<String, Integer, String> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
             while ((line = reader.readLine()) != null) {
-                Log.d("doInBackground", line);
                 postJson += line;
             }
             urlConnection.disconnect();
@@ -56,7 +55,6 @@ public class MatchesAsync extends AsyncTask<String, Integer, String> {
         Gson gson = builder.create();
         matchLists = gson.fromJson(postJson, String[].class);
         matchIds = new MatchIds(matchLists);
-        Log.d("delegateNullReference", String.valueOf(delegate == null));
         delegate.matchListsResponse(matchIds);
     }
 }
