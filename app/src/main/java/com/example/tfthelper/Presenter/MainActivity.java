@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private MatchDto matchDto;
     private List<String> winSet = new ArrayList<>();
 
-    final private String APIKey = "RGAPI-d844424b-2ac5-451a-afe2-e6e0c519923f";
+    final private String APIKey = ""; // Update when debugging - Using App, don't put anything when pushing
 
     //For Retrieving User's Id
     String userIdAPI = "https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-name/"; // and add "UserName" + API_KEY="APIKEY"
