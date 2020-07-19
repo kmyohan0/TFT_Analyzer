@@ -1,8 +1,9 @@
 package com.example.tfthelper.Model.Dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class InfoDto {
+public class InfoDto implements Serializable {
 
     //Variables
     private long game_datetime;

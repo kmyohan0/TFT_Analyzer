@@ -1,6 +1,8 @@
 package com.example.tfthelper.Model.Dto;
 
-public class SummonerDto {
+import java.io.Serializable;
+
+public class SummonerDto implements Serializable {
 
     private String accountId, name, id, puuid;
     private long revisionDate, summonerLevel;

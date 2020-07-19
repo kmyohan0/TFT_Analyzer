@@ -1,8 +1,9 @@
 package com.example.tfthelper.Model.Dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ParticipantDto {
+public class ParticipantDto implements Serializable {
 
     //Variables
     private CompanionDto companion;

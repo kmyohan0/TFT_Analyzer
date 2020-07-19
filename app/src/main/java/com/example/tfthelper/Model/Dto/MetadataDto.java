@@ -1,8 +1,9 @@
 package com.example.tfthelper.Model.Dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MetadataDto {
+public class MetadataDto implements Serializable {
 
     //variables
     private String data_version, match_id;

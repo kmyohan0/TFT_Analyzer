@@ -1,6 +1,8 @@
 package com.example.tfthelper.Model.Dto;
 
-public class TraitDto {
+import java.io.Serializable;
+
+public class TraitDto implements Serializable {
 
     //variables
     private String name;

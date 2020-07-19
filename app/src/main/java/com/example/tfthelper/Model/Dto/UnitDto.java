@@ -1,8 +1,13 @@
 package com.example.tfthelper.Model.Dto;
 
+import com.example.tfthelper.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class UnitDto {
+public class UnitDto implements Serializable {
 
     //Variables
     private List<Integer> items;

@@ -2,6 +2,8 @@ package com.example.tfthelper.Presenter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +29,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
-    private Button checkButton;
+    private Button checkButton, openIntentButton;
     private EditText summonerName;
     private TextView puuidViewer;
 
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private List<String> winSet = new ArrayList<>();
 
     final private String APIKey = ""; // Update when debugging - Using App, don't put anything when pushing
+
+    public static final String TAG = "item_";
 
     //For Retrieving User's Id
     String userIdAPI = "https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-name/"; // and add "UserName" + API_KEY="APIKEY"
@@ -59,12 +63,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 }
             }
         });
+        openIntentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity();
+            }
+        });
     }
 
     private void linkId() {
         checkButton = (Button) findViewById(R.id.check_button);
         summonerName = (EditText) findViewById(R.id.summoner_name);
         puuidViewer = (TextView) findViewById(R.id.puuid_viewer);
+        openIntentButton = (Button) findViewById(R.id.open_intent_button);
     }
 
     private void retrieveId() {
@@ -118,12 +129,22 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }
     }
 
+    private void openActivity() {
+        Intent intent = new Intent(this, AnalysisActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("MatchData", matchDto);
+        bundle.putInt("profileIconNumber", summonerDto.getProfileIconId());
+        bundle.putLong("summonerLevel", summonerDto.getSummonerLevel());
+        bundle.putString("summonerName", summonerDto.getName());
+        intent.putExtra("information", bundle);
+        startActivity(intent);
+    }
+
     @Override
     public void matchDataResponse(MatchDto matchDto) {
         this.matchDto = matchDto;
         String deckUsed = "";
-        //Apparently, this is an issue from RIOT API (a bug which only first place's trait and items shows, no other player's traits and items can be seen as of right now.
-        //Hopefully, this will be fixed soon, since we want User's data, not First place's data.
+        //TODO: change / create / add new arrayList that holds user's deck, instead of winner's deck (Needs to be fixed from RIOT, but still waiting on it)
         for (int i = 0; i < 8; i++) {
             int userPlacement = matchDto.getInfo().getParticipants().get(i).getPlacement();
             if (userPlacement == 1) {
@@ -131,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 break;
             }
         }
+
         winSet.add(deckUsed);
         puuidViewer.append("Set: " + winSet.get(winSet.size()-1) + '\n');
     }

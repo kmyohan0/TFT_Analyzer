@@ -1,6 +1,8 @@
 package com.example.tfthelper.Model.Dto;
 
-public class CompanionDto {
+import java.io.Serializable;
+
+public class CompanionDto implements Serializable {
 
     //Variables
     private String content_ID, species;

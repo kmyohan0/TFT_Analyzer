@@ -1,6 +1,8 @@
 package com.example.tfthelper.Model.Dto;
 
-public class MatchIds {
+import java.io.Serializable;
+
+public class MatchIds implements Serializable {
 
     private String[] matches;
 

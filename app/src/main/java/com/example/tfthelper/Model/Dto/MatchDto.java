@@ -1,6 +1,8 @@
 package com.example.tfthelper.Model.Dto;
 
-public class MatchDto {
+import java.io.Serializable;
+
+public class MatchDto implements Serializable {
 
     //variables
     private MetadataDto metadata;
@@ -11,9 +13,7 @@ public class MatchDto {
         this.info = info;
     }
 
-    public MetadataDto getMetadata() {
-        return metadata;
-    }
+    public MetadataDto getMetadata() { return metadata; }
 
     public void setMetadata(MetadataDto metadata) {
         this.metadata = metadata;
