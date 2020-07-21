@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import java.io.Serializable;
 import java.util.List;
 
-public class UnitDto implements Serializable {
+public class UnitDto implements Serializable{
 
     //Variables
     private List<Integer> items;

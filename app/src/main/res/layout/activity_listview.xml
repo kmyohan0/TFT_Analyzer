@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_margin="5sp"
+        android:id="@+id/champion_image"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/champion_name"
+            android:text="Name: "/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/champion_tier"
+            android:text="Tier: "/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="75sp"
+                android:layout_height="24sp"
+                android:layout_marginTop="12sp"
+                android:id="@+id/champion_items"
+                android:text="Name: "/>
+
+            <ImageView
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginTop="12sp"
+                android:layout_marginLeft="25sp"
+                android:id="@+id/list_item_1"/>
+
+            <ImageView
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginTop="12sp"
+                android:layout_marginLeft="25sp"
+                android:id="@+id/list_item_2"/>
+
+            <ImageView
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginTop="12sp"
+                android:layout_marginLeft="25sp"
+                android:id="@+id/list_item_3"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,5 +1,7 @@
 package com.example.tfthelper.Model.Dto;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 public class TraitDto implements Serializable {
@@ -46,4 +48,5 @@ public class TraitDto implements Serializable {
     public void setTier_total(int tier_total) {
         this.tier_total = tier_total;
     }
+
 }
