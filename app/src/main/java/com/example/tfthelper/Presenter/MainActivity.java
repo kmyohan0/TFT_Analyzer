@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private MatchDto matchDto;
     private ArrayList<String> winSet = new ArrayList<>();
 
-    final private String APIKey = "RGAPI-d2aa2007-578e-4a6b-bcf8-b98798a2e3ad"; // Update when debugging - Using App, don't put anything when pushing
+    final private String APIKey = ""; // Update when debugging - Using App, don't put anything when pushing
 
     public static final String TAG = "item_";
 
