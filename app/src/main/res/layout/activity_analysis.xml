@@ -1,74 +1,313 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="false">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
 
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <!--Place for User Information-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/user_profile_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/profile_icon"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="30dp" />
-
-            <LinearLayout
+                android:id="@+id/summoner_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/summoner_name"
-                    android:layout_width="116dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_toEndOf="@+id/profile_icon"
-                    android:layout_weight="1"
-                    android:text="Name: "
-                    android:textSize="24sp" />
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/level"
-                    android:layout_width="116dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/summoner_name"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_toEndOf="@+id/profile_icon"
-                    android:layout_weight="1"
-                    android:text="Level: "
-                    android:textSize="24sp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/summoner_name"
+                android:layout_width="200sp"
+                android:layout_height="24dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/summoner_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintStart_toEndOf="@+id/summoner_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/summoner_level"
+                android:layout_width="200sp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/summoner_level"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintStart_toEndOf="@+id/summoner_icon"
+                app:layout_constraintTop_toBottomOf="@+id/summoner_name" />
 
-        <ListView
-            android:id="@+id/content_view"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--Place for most used Champion (Most top 3) -->
+
+        <!--Place for Most Used Champion with Item-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/most_used_champion_layout_1"
             android:layout_width="match_parent"
-            android:layout_height="350dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            app:layout_constraintTop_toBottomOf="@+id/user_profile_layout"
+            tools:layout_editor_absoluteX="0dp">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/champion_image_1"
+                android:layout_width="78dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4sp"
+                app:layout_constraintStart_toStartOf="@+id/most_used_champion_layout_1"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <!--Place for most used deck-->
+            <TextView
+                android:id="@+id/champion_name_1"
+                android:layout_width="200sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/champion_name"
+                app:layout_constraintStart_toEndOf="@+id/champion_image_1"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <!--Place for Most Used Champion with Item-->
+            <TextView
+                android:id="@+id/champion_used_1"
+                android:layout_width="200sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/champion_used"
+                app:layout_constraintStart_toEndOf="@+id/champion_image_1"
+                app:layout_constraintTop_toBottomOf="@+id/champion_name_1" />
+
+            <TextView
+                android:id="@+id/champion_items_1"
+                android:layout_width="75sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/item_used"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintStart_toEndOf="@+id/champion_image_1"
+                app:layout_constraintTop_toBottomOf="@+id/champion_used_1"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginBottom="10sp"/>
+
+            <ImageView
+                android:id="@+id/list_item_1_1"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/champion_items_1" />
+
+            <ImageView
+                android:id="@+id/list_item_2_1"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/list_item_1_1" />
+
+            <ImageView
+                android:id="@+id/list_item_3_1"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/list_item_2_1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/most_used_champion_layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            app:layout_constraintTop_toBottomOf="@+id/most_used_champion_layout_1"
+            tools:layout_editor_absoluteX="0dp">
+
+            <ImageView
+                android:id="@+id/champion_image_2"
+                android:layout_width="78dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4sp"
+                app:layout_constraintStart_toStartOf="@+id/most_used_champion_layout_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/champion_name_2"
+                android:layout_width="200sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/champion_name"
+                app:layout_constraintStart_toEndOf="@+id/champion_image_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/champion_used_2"
+                android:layout_width="200sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/champion_used"
+                app:layout_constraintStart_toEndOf="@+id/champion_image_2"
+                app:layout_constraintTop_toBottomOf="@+id/champion_name_2" />
+
+            <TextView
+                android:id="@+id/champion_items_2"
+                android:layout_width="75sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/item_used"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintStart_toEndOf="@+id/champion_image_2"
+                app:layout_constraintTop_toBottomOf="@+id/champion_used_2"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginBottom="10sp"/>
+
+            <ImageView
+                android:id="@+id/list_item_1_2"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/champion_items_2" />
+
+            <ImageView
+                android:id="@+id/list_item_2_2"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/list_item_1_2" />
+
+            <ImageView
+                android:id="@+id/list_item_3_2"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/list_item_2_2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/most_used_champion_layout_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            app:layout_constraintTop_toBottomOf="@+id/most_used_champion_layout_2"
+            tools:layout_editor_absoluteX="0dp">
+
+            <ImageView
+                android:id="@+id/champion_image_3"
+                android:layout_width="78dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4sp"
+                app:layout_constraintStart_toStartOf="@+id/most_used_champion_layout_3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/champion_name_3"
+                android:layout_width="200sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/champion_name"
+                app:layout_constraintStart_toEndOf="@+id/champion_image_3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/champion_used_3"
+                android:layout_width="200sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/champion_used"
+                app:layout_constraintStart_toEndOf="@+id/champion_image_3"
+                app:layout_constraintTop_toBottomOf="@+id/champion_name_3" />
+
+            <TextView
+                android:id="@+id/champion_items_3"
+                android:layout_width="75sp"
+                android:layout_height="16dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/item_used"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintStart_toEndOf="@+id/champion_image_3"
+                app:layout_constraintTop_toBottomOf="@+id/champion_used_3"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginBottom="10sp"/>
+
+            <ImageView
+                android:id="@+id/list_item_1_3"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/champion_items_3" />
+
+            <ImageView
+                android:id="@+id/list_item_2_3"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/list_item_1_3" />
+
+            <ImageView
+                android:id="@+id/list_item_3_3"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/list_item_2_3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
     <!--Place for comparison with other deck (Ideally, weakest against certain deck) -->
 
-    </ScrollView>
+
+</ScrollView>
