@@ -2,6 +2,7 @@ package com.example.tfthelper.Presenter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.AsyncTask;
@@ -39,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     private SummonerDto summonerDto;
     private String[] matchData;
-    private MatchDto matchDto;
+    private ArrayList<MatchDto> matchDto = new ArrayList<>();
+    private String deckUsed;
     private ArrayList<String> winSet = new ArrayList<>();
 
     final private String APIKey = ""; // Update when debugging - Using App, don't put anything when pushing
@@ -107,7 +109,13 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     @Override
     public void userIdResponse(SummonerDto summonerDto) throws MalformedURLException {
         this.summonerDto = summonerDto;
-        retrieveMatches();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                retrieveMatches();
+            }
+        }, 500);
     }
 
     @Override
@@ -129,32 +137,43 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                         e.printStackTrace();
                     }
                 }
-            }, 500);
+            }, 1000);
         }
     }
 
     private void openActivity() {
+
         Intent intent = new Intent(this, AnalysisActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("MatchData", matchDto);
         bundle.putInt("profileIconNumber", summonerDto.getProfileIconId());
         bundle.putLong("summonerLevel", summonerDto.getSummonerLevel());
         bundle.putString("summonerName", summonerDto.getName());
         bundle.putStringArrayList("winSet", winSet);
+        for (int i = 0; i < matchDto.size(); i++) {
+            MatchDto temp = matchDto.get(i);
+            bundle.putParcelable("MatchData"+i, temp);
+        }
         intent.putExtra("information", bundle);
         startActivity(intent);
     }
 
     @Override
     public void matchDataResponse(MatchDto matchDto) {
-        this.matchDto = matchDto;
-        String deckUsed = "";
-        //TODO: change / create / add new arrayList that holds user's deck, instead of winner's deck (Needs to be fixed from RIOT, but still waiting on it)
+        MatchDto temp = matchDto;
+        this.matchDto.add(temp);
+        winDeck();
+        winSet.add(deckUsed);
+        puuidViewer.append("Set: " + winSet.get(winSet.size()-1) + '\n');
+    }
+
+    private void winDeck() {
+        //TODO: change / create / add new arrayList that holds user's deck, instead of winner's deck (As soon as league client updates, this will be available)
+        deckUsed = "";
         for (int i = 0; i < 8; i++) {
-            int userPlacement = matchDto.getInfo().getParticipants().get(i).getPlacement();
+            int userPlacement = matchDto.get(matchDto.size()-1).getInfo().getParticipants().get(i).getPlacement();
             if (userPlacement == 1) {
                 //Find most-used trait, not first two trait (below shows first two trait)
-                List<TraitDto> units = matchDto.getInfo().getParticipants().get(i).getTraits();
+                List<TraitDto> units = matchDto.get(matchDto.size()-1).getInfo().getParticipants().get(i).getTraits();
                 int index = units.size();
                 for (int j = 1; j < index; ++j) {
                     TraitDto key = units.get(j);
@@ -187,8 +206,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 break;
             }
         }
-        winSet.add(deckUsed);
-        puuidViewer.append("Set: " + winSet.get(winSet.size()-1) + '\n');
     }
 
     private String trimTraitName(String trait) {

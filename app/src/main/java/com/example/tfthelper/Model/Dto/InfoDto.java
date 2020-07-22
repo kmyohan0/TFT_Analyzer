@@ -1,9 +1,12 @@
 package com.example.tfthelper.Model.Dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class InfoDto implements Serializable {
+public class InfoDto implements Parcelable {
 
     //Variables
     private long game_datetime;
@@ -77,4 +80,43 @@ public class InfoDto implements Serializable {
     public void setTft_set_number(int tft_set_number) {
         this.tft_set_number = tft_set_number;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.game_datetime);
+        dest.writeFloat(this.game_length);
+        dest.writeString(this.game_variation);
+        dest.writeString(this.game_version);
+        dest.writeTypedList(this.participants);
+        dest.writeInt(this.queue_id);
+        dest.writeInt(this.tft_set_number);
+    }
+
+    protected InfoDto(Parcel in) {
+        this.game_datetime = in.readLong();
+        this.game_length = in.readFloat();
+        this.game_variation = in.readString();
+        this.game_version = in.readString();
+        this.participants = in.createTypedArrayList(ParticipantDto.CREATOR);
+        this.queue_id = in.readInt();
+        this.tft_set_number = in.readInt();
+    }
+
+    public static final Creator<InfoDto> CREATOR = new Creator<InfoDto>() {
+        @Override
+        public InfoDto createFromParcel(Parcel source) {
+            return new InfoDto(source);
+        }
+
+        @Override
+        public InfoDto[] newArray(int size) {
+            return new InfoDto[size];
+        }
+    };
 }

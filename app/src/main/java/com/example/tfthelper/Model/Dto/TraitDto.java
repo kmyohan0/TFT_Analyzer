@@ -1,10 +1,12 @@
 package com.example.tfthelper.Model.Dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.Serializable;
 
-public class TraitDto implements Serializable {
+public class TraitDto implements Parcelable {
 
     //variables
     private String name;
@@ -16,6 +18,25 @@ public class TraitDto implements Serializable {
         this.tier_current = tier_current;
         this.tier_total = tier_total;
     }
+
+    protected TraitDto(Parcel in) {
+        name = in.readString();
+        num_units = in.readInt();
+        tier_current = in.readInt();
+        tier_total = in.readInt();
+    }
+
+    public static final Creator<TraitDto> CREATOR = new Creator<TraitDto>() {
+        @Override
+        public TraitDto createFromParcel(Parcel in) {
+            return new TraitDto(in);
+        }
+
+        @Override
+        public TraitDto[] newArray(int size) {
+            return new TraitDto[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -49,4 +70,16 @@ public class TraitDto implements Serializable {
         this.tier_total = tier_total;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(num_units);
+        dest.writeInt(tier_current);
+        dest.writeInt(tier_total);
+    }
 }

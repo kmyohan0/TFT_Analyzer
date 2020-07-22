@@ -1,8 +1,11 @@
 package com.example.tfthelper.Model.Dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class SummonerDto implements Serializable {
+public class SummonerDto implements Parcelable {
 
     private String accountId, name, id, puuid;
     private long revisionDate, summonerLevel;
@@ -17,6 +20,44 @@ public class SummonerDto implements Serializable {
         this.summonerLevel = summonerLevel;
         this.profileIconId = profileIconId;
     }
+
+    protected SummonerDto(Parcel in) {
+        accountId = in.readString();
+        name = in.readString();
+        id = in.readString();
+        puuid = in.readString();
+        revisionDate = in.readLong();
+        summonerLevel = in.readLong();
+        profileIconId = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(accountId);
+        dest.writeString(name);
+        dest.writeString(id);
+        dest.writeString(puuid);
+        dest.writeLong(revisionDate);
+        dest.writeLong(summonerLevel);
+        dest.writeInt(profileIconId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<SummonerDto> CREATOR = new Creator<SummonerDto>() {
+        @Override
+        public SummonerDto createFromParcel(Parcel in) {
+            return new SummonerDto(in);
+        }
+
+        @Override
+        public SummonerDto[] newArray(int size) {
+            return new SummonerDto[size];
+        }
+    };
 
     public String getAccountId() {
         return accountId;

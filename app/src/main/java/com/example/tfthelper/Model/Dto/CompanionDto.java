@@ -1,8 +1,11 @@
 package com.example.tfthelper.Model.Dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class CompanionDto implements Serializable {
+public class CompanionDto implements Parcelable {
 
     //Variables
     private String content_ID, species;
@@ -13,6 +16,24 @@ public class CompanionDto implements Serializable {
         this.species = species;
         this.skin_ID = skin_ID;
     }
+
+    protected CompanionDto(Parcel in) {
+        content_ID = in.readString();
+        species = in.readString();
+        skin_ID = in.readInt();
+    }
+
+    public static final Creator<CompanionDto> CREATOR = new Creator<CompanionDto>() {
+        @Override
+        public CompanionDto createFromParcel(Parcel in) {
+            return new CompanionDto(in);
+        }
+
+        @Override
+        public CompanionDto[] newArray(int size) {
+            return new CompanionDto[size];
+        }
+    };
 
     public String getContent_ID() {
         return content_ID;
@@ -36,5 +57,17 @@ public class CompanionDto implements Serializable {
 
     public void setSkin_ID(int skin_ID) {
         this.skin_ID = skin_ID;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(content_ID);
+        dest.writeString(species);
+        dest.writeInt(skin_ID);
     }
 }

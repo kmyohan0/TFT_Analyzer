@@ -1,9 +1,12 @@
 package com.example.tfthelper.Model.Dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class ParticipantDto implements Serializable {
+public class ParticipantDto implements Parcelable {
 
     //Variables
     private CompanionDto companion;
@@ -114,4 +117,51 @@ public class ParticipantDto implements Serializable {
     public void setUnits(List<UnitDto> units) {
         this.units = units;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.companion, flags);
+        dest.writeInt(this.gold_left);
+        dest.writeInt(this.last_round);
+        dest.writeInt(this.level);
+        dest.writeInt(this.placement);
+        dest.writeInt(this.players_eliminated);
+        dest.writeInt(this.total_damage_to_players);
+        dest.writeString(this.puuid);
+        dest.writeFloat(this.time_eliminated);
+        dest.writeTypedList(this.traits);
+        dest.writeTypedList(this.units);
+    }
+
+    protected ParticipantDto(Parcel in) {
+        this.companion = in.readParcelable(CompanionDto.class.getClassLoader());
+        this.gold_left = in.readInt();
+        this.last_round = in.readInt();
+        this.level = in.readInt();
+        this.placement = in.readInt();
+        this.players_eliminated = in.readInt();
+        this.total_damage_to_players = in.readInt();
+        this.puuid = in.readString();
+        this.time_eliminated = in.readFloat();
+        this.traits = in.createTypedArrayList(TraitDto.CREATOR);
+        this.units = in.createTypedArrayList(UnitDto.CREATOR);
+    }
+
+    public static final Creator<ParticipantDto> CREATOR = new Creator<ParticipantDto>() {
+        @Override
+        public ParticipantDto createFromParcel(Parcel source) {
+            return new ParticipantDto(source);
+        }
+
+        @Override
+        public ParticipantDto[] newArray(int size) {
+            return new ParticipantDto[size];
+        }
+    };
 }

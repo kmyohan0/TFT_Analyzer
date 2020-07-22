@@ -1,13 +1,17 @@
 package com.example.tfthelper.Model.Dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.tfthelper.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class UnitDto implements Serializable{
+public class UnitDto implements Parcelable {
 
     //Variables
     private List<Integer> items;
@@ -61,4 +65,40 @@ public class UnitDto implements Serializable{
     public void setTier(int tier) {
         this.tier = tier;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeList(this.items);
+        dest.writeString(this.character_id);
+        dest.writeString(this.name);
+        dest.writeInt(this.rarity);
+        dest.writeInt(this.tier);
+    }
+
+    protected UnitDto(Parcel in) {
+        this.items = new ArrayList<Integer>();
+        in.readList(this.items, Integer.class.getClassLoader());
+        this.character_id = in.readString();
+        this.name = in.readString();
+        this.rarity = in.readInt();
+        this.tier = in.readInt();
+    }
+
+    public static final Creator<UnitDto> CREATOR = new Creator<UnitDto>() {
+        @Override
+        public UnitDto createFromParcel(Parcel source) {
+            return new UnitDto(source);
+        }
+
+        @Override
+        public UnitDto[] newArray(int size) {
+            return new UnitDto[size];
+        }
+    };
 }
