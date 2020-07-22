@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private String deckUsed;
     private ArrayList<String> winSet = new ArrayList<>();
 
-    final private String APIKey = "RGAPI-276f3c1d-29d6-4e8c-b5da-85e30ab3efb4"; // Update when debugging - Using App, don't put anything when pushing
+    final private String APIKey = ""; // Update when debugging - Using App, don't put anything when pushing
 
     public static final String TAG = "item_";
 
