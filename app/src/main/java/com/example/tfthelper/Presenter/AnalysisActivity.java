@@ -186,7 +186,7 @@ public class AnalysisActivity extends AppCompatActivity {
         //For average Win Rate
         parseCharts();
         double average = winRate.stream().mapToDouble(val -> val).average().orElse(0.0);
-        averageWinRate.append(" " + average);
+        averageWinRate.append("" + average);
 
         barDataSet = new BarDataSet(barEntries,"Win_Rate");
         barData = new BarData(barDataSet);

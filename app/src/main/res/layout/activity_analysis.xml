@@ -68,11 +68,11 @@
 
             <TextView
                 android:id="@+id/most_used_deck_set"
-                android:layout_width="300sp"
+                android:layout_width="350sp"
                 android:layout_height="30sp"
                 android:layout_margin="10sp"
                 android:text="@string/most_used_deck"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -191,7 +191,7 @@
 
             <TextView
                 android:id="@+id/average_win_rate_text"
-                android:layout_width="200sp"
+                android:layout_width="250sp"
                 android:layout_height="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -242,7 +242,7 @@
 
             <TextView
                 android:id="@+id/champion_name_1"
-                android:layout_width="200sp"
+                android:layout_width="270sp"
                 android:layout_height="20sp"
                 android:layout_marginStart="36sp"
                 android:layout_marginTop="8sp"
@@ -325,7 +325,7 @@
 
             <TextView
                 android:id="@+id/champion_name_2"
-                android:layout_width="200sp"
+                android:layout_width="270sp"
                 android:layout_height="20sp"
                 android:layout_marginStart="36sp"
                 android:layout_marginTop="8sp"
@@ -409,7 +409,7 @@
 
             <TextView
                 android:id="@+id/champion_name_3"
-                android:layout_width="200sp"
+                android:layout_width="270sp"
                 android:layout_height="20sp"
                 android:layout_marginStart="36sp"
                 android:layout_marginTop="8sp"
