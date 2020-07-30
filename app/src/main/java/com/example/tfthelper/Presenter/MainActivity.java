@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         Intent intent = new Intent(this, AnalysisActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putString("userPuuid", summonerDto.getPuuid());
         bundle.putInt("profileIconNumber", summonerDto.getProfileIconId());
         bundle.putLong("summonerLevel", summonerDto.getSummonerLevel());
         bundle.putString("summonerName", summonerDto.getName());
@@ -161,58 +162,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     public void matchDataResponse(MatchDto matchDto) {
         MatchDto temp = matchDto;
         this.matchDto.add(temp);
-        winDeck();
-        winSet.add(deckUsed);
-        puuidViewer.append("Set: " + winSet.get(winSet.size()-1) + '\n');
-    }
-
-    private void winDeck() {
-        //TODO: change / create / add new arrayList that holds user's deck, instead of winner's deck (As soon as league client updates, this will be available)
-        deckUsed = "";
-        for (int i = 0; i < 8; i++) {
-            int userPlacement = matchDto.get(matchDto.size()-1).getInfo().getParticipants().get(i).getPlacement();
-            if (userPlacement == 1) {
-                //Find most-used trait, not first two trait (below shows first two trait)
-                List<TraitDto> units = matchDto.get(matchDto.size()-1).getInfo().getParticipants().get(i).getTraits();
-                int index = units.size();
-                for (int j = 1; j < index; ++j) {
-                    TraitDto key = units.get(j);
-                    int k = j - 1;
-                    while (k >= 0 && units.get(k).getNum_units() > key.getNum_units()) {
-                        units.set(k+1, units.get(k));
-                        k = k - 1;
-                    }
-                    units.set(k+1, key);
-                }
-                //Now, add traits to deckUsed. However, we need to think that some character may have same champions. Thus, make program for that (AND GO BACKWARD)
-                int count = 2;
-                int length = units.get(0).getNum_units();
-                for (int j = units.size()-1; j >= 0; j--) {
-                    if (count != 0) {
-                        if (length == units.get(j).getNum_units()) {
-                            deckUsed = deckUsed + " " + trimTraitName(units.get(j).getName());
-                        }
-                        else {
-                            deckUsed = deckUsed + " " + trimTraitName(units.get(j).getName());
-                            length = units.get(j).getNum_units();
-                            count--;
-                        }
-                    }
-                    else {
-                        break;
-                    }
-                }
-                units = null;
-                break;
-            }
-        }
-    }
-
-    private String trimTraitName(String trait) {
-        if (trait.contains("SET") || trait.contains("Set")) {
-            trait = trait.substring(5);
-        }
-        return trait;
     }
 
 }

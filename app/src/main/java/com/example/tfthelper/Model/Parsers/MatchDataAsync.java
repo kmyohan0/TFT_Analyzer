@@ -38,6 +38,7 @@ public class MatchDataAsync extends AsyncTask<String, Integer, String> {
                 stringBuilder.append(line);
             }
             postJson = stringBuilder.toString();
+            urlConnection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }

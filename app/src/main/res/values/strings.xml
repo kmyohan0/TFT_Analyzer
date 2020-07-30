@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">TFT Helper</string>
-    <string name="summoner_name">Summoner Name: </string>
+    <string name="summoner_name">Name: </string>
     <string name="summoner_level">Summoner Level: </string>
     <string name="champion_name">Champion Name: </string>
     <string name="champion_used">Champion Used: </string>
     <string name="item_used">Item Used: </string>
+    <string name="most_used_deck">Most Used Deck Set: </string>
+    <string name="win_rate">Average Placement: </string>
 </resources>
